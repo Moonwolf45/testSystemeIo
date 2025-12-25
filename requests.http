@@ -20,3 +20,58 @@ Content-Type: application/json
   "couponCode": "D15",
   "paymentProcessor": "paypal"
 }
+
+### Calculate Price без купона (демонстрирует расчет без скидки)
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "FRAA123456789"
+}
+
+### Calculate Price с неправильным купоном (демонстрирует обработку некорректного купона, цена без скидки)
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 3,
+  "taxNumber": "ES12345678",
+  "couponCode": "INVALID"
+}
+
+### Execute Purchase через Stripe (демонстрирует выбор Stripe-процессора)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR123456789",
+  "couponCode": "F10",
+  "paymentProcessor": "stripe"
+}
+
+### Execute Purchase с недопустимым paymentProcessor (демонстрирует ошибку, если фабрика не поддерживает тип)
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D15",
+  "paymentProcessor": "bitcoin"
+}
+
+### Calculate Price для другой страны (демонстрирует расчет налога для Греции)
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "GR123456789"
+}
