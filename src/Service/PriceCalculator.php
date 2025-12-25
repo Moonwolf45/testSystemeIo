@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Enum\CouponType;
+
 class PriceCalculator
 {
     private array $taxRates = [
@@ -18,9 +20,9 @@ class PriceCalculator
 
         $priceAfterDiscount = $basePrice;
         if ($coupon) {
-            if ($coupon['type'] === 'fixed') {
+            if ($coupon['type'] === CouponType::Fixed) {
                 $priceAfterDiscount = max(0, $basePrice - $coupon['value']);
-            } elseif ($coupon['type'] === 'percent') {
+            } elseif ($coupon['type'] === CouponType::Percent) {
                 $priceAfterDiscount = $basePrice * (1 - $coupon['value'] / 100);
             }
         }

@@ -2,24 +2,22 @@
 
 namespace App\Service;
 
-use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
+use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor as ExternalStripe;
 
-class PaymentProcessorFactory
+class StripePaymentProcessor implements PaymentProcessorInterface
 {
-    private PaypalPaymentProcessor $paypal;
-    private StripePaymentProcessor $stripe;
+    private ExternalStripe $processor;
 
-    public function __construct(PaypalPaymentProcessor $paypal, StripePaymentProcessor $stripe)
+    public function __construct(ExternalStripe $processor)
     {
-        $this->paypal = $paypal;
-        $this->stripe = $stripe;
+        $this->processor = $processor;
     }
 
-    public function getProcessor(string $type): PaymentProcessorInterface
+    /**
+     * @throws \Exception
+     */
+    public function pay(float $amount): bool
     {
-        return match ($type) {
-            'paypal' => $this->paypal,
-            'stripe' => $this->stripe,
-        };
+        return $this->processor->processPayment($amount);
     }
 }

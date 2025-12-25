@@ -2,34 +2,30 @@
 
 namespace App\Entity;
 
+use App\Repository\CouponRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Enum\CouponType;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: CouponRepository::class)]
+#[ORM\Table(name: '`coupons`')]
 class Coupon
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=10, unique=true)
      */
+    #[ORM\Column(length: 10, unique: true)]
     private string $code;
 
-    /**
-     * @ORM\Column(type="string", length=10, enumType: CouponType::class) // 'fixed' или 'percent'
-     */
-    private string $type = 'percent';
+    #[ORM\Column(type: 'string',  enumType: CouponType::class)]
+    private CouponType $type = CouponType::Percent;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     */
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private float $value;
 
     public function getId(): ?int

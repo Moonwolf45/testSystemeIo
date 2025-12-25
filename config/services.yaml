@@ -20,5 +20,19 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\StripePaymentProcessor:
+        public: false
+
+    App\Service\PaymentProcessorFactory:
+        public: false
+
+    App\Service\PaypalPaymentProcessor:
+        public: false
+
+    App\Controller\ApiController:
+        public: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

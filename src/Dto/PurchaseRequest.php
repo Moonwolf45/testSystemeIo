@@ -15,7 +15,6 @@ class PurchaseRequest
     #[TaxNumber]
     public string $taxNumber;
 
-    #[Assert\Optional]
     public ?string $couponCode = null;
 
     #[Assert\NotBlank]

@@ -8,13 +8,18 @@ class PaypalPaymentProcessor implements PaymentProcessorInterface
 {
     private ExternalPaypal $processor;
 
-    public function __construct()
+    public function __construct(ExternalPaypal $processor)
     {
-        $this->processor = new ExternalPaypal();
+        $this->processor = $processor;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function pay(float $amount): bool
     {
-        return $this->processor->pay($amount);
+        $this->processor->pay($amount);
+
+        return true;
     }
 }
