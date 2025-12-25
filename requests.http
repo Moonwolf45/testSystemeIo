@@ -50,7 +50,7 @@ Content-Type: application/json
 {
   "product": 1,
   "taxNumber": "GR123456789",
-  "couponCode": "F10",
+  "couponCode": "P10",
   "paymentProcessor": "stripe"
 }
 
